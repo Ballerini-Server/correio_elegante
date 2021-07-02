@@ -1,10 +1,7 @@
 import "dotenv/config";
 import { Client } from "discord.js";
 
-const { token } = process.env
-
-const channelId = "860651405114605608"
-const correioLog = "836004917973614665"
+const { token, channelId, correioLog } = process.env
 
 const client = new Client({
   partials: ["MESSAGE", "CHANNEL", "REACTION", "USER"],
