@@ -4,10 +4,17 @@ import Discord from "discord.js";
 const { token, channelId, correioLog, guildId, mailCommand } = process.env
 
 const errorMessage = `Desculpa, eu não encontrei a pessoa que me pediu. Por favor, tente novamente, envie uma mensagem em um desses formatos:
-\`<3correio 553414151758807064 Como você está elegante hoje!\`
-\`<3correio balle#1404 Como você está elegante hoje!\`
+\`<3correio 776083372787236864 Como você está elegante hoje!\`
+\`<3correio Correio Elegante#2462 Como você está elegante hoje!\`
 Para descobrir o Id da pessoa, você pode digitar \\ @Usuario#Number
-`
+`;
+
+const welcomeMessage = `Oi! Bem vindo ao correio elegante 💗!
+Envie uma mensagem em um desses formatos para mandar uma mensagem anônima!
+\`<3correio 776083372787236864 Como você está elegante hoje!\`
+\`<3correio Correio Elegante#2462 Como você está elegante hoje!\`
+Para descobrir o Id da pessoa, você pode digitar \\ @Usuario#Number
+`;
 
 const client = new Discord.Client({
   partials: ['MESSAGE', 'CHANNEL', 'REACTION', 'USERS', 'GUILD_MEMBER'],
@@ -16,8 +23,13 @@ const client = new Discord.Client({
 
 let guild = client.guilds.cache.get(guildId)
 
-client.on('ready', () => {
+client.on('ready', async () => {
   guild = client.guilds.cache.get(guildId)
+  await client.user.setPresence({
+    activity: {
+      name: 'Apaixonado 💗! Envie <3correio para enviar um correio elegante 💗!',
+    }
+  });
 })
 
 async function sendMessage(user, message) {
@@ -39,6 +51,11 @@ ${message}
 }
 
 client.on('message', async (message) => {
+  const result = message.mentions.users.get(client.user.id);
+  if (result) {
+    await message.author.send(welcomeMessage)
+    return;
+  }
   if (message.channel.id === channelId && !message.author.bot) {
     try {
       await message.delete()
