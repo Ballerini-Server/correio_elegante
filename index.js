@@ -40,6 +40,7 @@ client.on('message', async (message) => {
       \`<3correio 553414151758807064 Como você está elegante hoje!\`
       `)
       }
+      message.delete()
     } catch (error) {
       console.log(error)
     }
