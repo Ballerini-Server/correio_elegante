@@ -40,7 +40,7 @@ ${message}
 }
 
 client.on('message', async (message) => {
-  if (message.channel.id === channelId || message.author.bot) {
+  if (message.channel.id === channelId && !message.author.bot) {
     try {
       await message.delete()
     } catch { }
