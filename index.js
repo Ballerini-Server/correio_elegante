@@ -40,6 +40,11 @@ ${message}
 }
 
 client.on('message', async (message) => {
+  if (message.channel.id === channelId || message.author.bot) {
+    try {
+      await message.delete()
+    } catch { }
+  }
   if (message.author.bot || !message.content.startsWith(mailCommand)) return;
   try {
     await message.delete()
