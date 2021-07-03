@@ -1,8 +1,8 @@
 import "dotenv/config";
 import Discord from "discord.js";
 
-const { token, channelId, correioLog } = process.env
-const mailCommand = '<3correio';
+const { token, channelId, correioLog, guildId } = process.env
+const mailCommand = 'correio';
 
 const errorMessage = `Desculpa, eu não encontrei a pessoa que me pediu. Por favor, tente novamente, envie uma mensagem em um desses formatos:
 \`<3correio 553414151758807064 Como você está elegante hoje!\`
@@ -14,12 +14,19 @@ const client = new Discord.Client({
   partials: ['MESSAGE', 'CHANNEL', 'REACTION', 'USERS', 'GUILD_MEMBER'],
 });
 
+
+let guild = client.guilds.cache.get(guildId)
+
+client.on('ready', () => {
+  guild = client.guilds.cache.get(guildId)
+})
+
 async function sendMessage(user, message) {
   const channel = await client.channels.fetch(channelId);
   await channel.send(`
   > ** De:** Anônimo
     > ** Para:** <@${user.id}>
-      ${message}
+${message}
 `)
 }
 
@@ -28,7 +35,7 @@ async function sendLogMessage(user, message, from) {
   await channel.send(`
   > ** De:**  <@${from.id}>
   > ** Para:** <@${user.id}>
-  ${message}
+${message}
 `)
 }
 
@@ -45,6 +52,13 @@ client.on('message', async (message) => {
   } else {
     msg = msg.join(' ')
   }
+  guild.emojis.cache.map(emoji => {
+    if (msg.includes(`:${emoji.name}:`)) {
+      const regex = new RegExp(`<:${emoji.name}:([0-9]{18})>|:${emoji.name}:`, "g")
+      msg = msg.replace(regex, emoji)
+    }
+  })
+
   try {
     const user = client.users.cache.find(u => {
       if (u.bot) return false;
