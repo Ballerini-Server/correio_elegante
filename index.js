@@ -2,7 +2,7 @@ import "dotenv/config";
 import Discord from "discord.js";
 
 const { token, channelId, correioLog, guildId } = process.env
-const mailCommand = 'correio';
+const mailCommand = '<3correio';
 
 const errorMessage = `Desculpa, eu não encontrei a pessoa que me pediu. Por favor, tente novamente, envie uma mensagem em um desses formatos:
 \`<3correio 553414151758807064 Como você está elegante hoje!\`
