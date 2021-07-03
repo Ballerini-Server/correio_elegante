@@ -1,8 +1,7 @@
 import "dotenv/config";
 import Discord from "discord.js";
 
-const { token, channelId, correioLog, guildId } = process.env
-const mailCommand = '<3correio';
+const { token, channelId, correioLog, guildId, mailCommand } = process.env
 
 const errorMessage = `Desculpa, eu não encontrei a pessoa que me pediu. Por favor, tente novamente, envie uma mensagem em um desses formatos:
 \`<3correio 553414151758807064 Como você está elegante hoje!\`
@@ -52,8 +51,12 @@ client.on('message', async (message) => {
   let [command, userTag, ...msg] = message.content.split(' ');
   if (isNaN(userTag)) {
     const index = message.content.indexOf('#')
-    userTag = message.content.slice(command.length + 1, index + 5)
-    msg = message.content.slice(index + 5, message.content.length)
+    if (index > 0) {
+      userTag = message.content.slice(command.length + 1, index + 5)
+      msg = message.content.slice(index + 5, message.content.length)
+    } else {
+      msg = msg.join(' ')
+    }
   } else {
     msg = msg.join(' ')
   }
@@ -65,10 +68,14 @@ client.on('message', async (message) => {
   })
 
   try {
-    const user = client.users.cache.find(u => {
+    let user;
+    user = client.users.cache.find(u => {
       if (u.bot) return false;
       return u.tag === userTag || u.id === userTag
     })
+    if (message.mentions.users.size > 0 && !user) {
+      user = message.mentions.users.first();
+    }
     if (user) {
       await sendMessage(user, msg)
       await sendLogMessage(user, msg, message.author)
