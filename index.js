@@ -72,11 +72,12 @@ client.on('message', async (message) => {
     if (user) {
       await sendMessage(user, msg)
       await sendLogMessage(user, msg, message.author)
+      await message.author.send('Mensagem enviada com sucesso')
     } else {
-      message.reply(errorMessage)
+      await message.author.send(errorMessage)
     }
   } catch (error) {
-    message.reply(errorMessage)
+    await message.author.send(errorMessage)
     console.log(error)
   }
 
