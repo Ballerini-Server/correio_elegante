@@ -8,7 +8,7 @@ const client = new Client({
 });
 
 async function sendMessage(user, message) {
-  const channel = await client.channels.fetch(correioLog);
+  const channel = await client.channels.fetch(channelId);
   await channel.send(`
   > **De:** Anônimo
   > **Para:** <@${user.id}>
@@ -17,7 +17,7 @@ async function sendMessage(user, message) {
 }
 
 async function sendLogMessage(user, message, from) {
-  const channel = await client.channels.fetch(channelId);
+  const channel = await client.channels.fetch(correioLog);
   await channel.send(`
   > **De:**  <@${from.id}>
   > **Para:** <@${user.id}>
