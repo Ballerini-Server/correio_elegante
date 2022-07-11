@@ -1,7 +1,7 @@
 import "dotenv/config";
 import Discord from "discord.js";
 
-const { token, channelId, correioLog, guildId, mailCommand } = process.env
+const { BOT_TOKEN, channelId, correioLog, guildId, mailCommand } = process.env
 
 const errorMessage = `Desculpa, eu não encontrei a pessoa que me pediu. Por favor, tente novamente, envie uma mensagem em um desses formatos:
 \`<3correio 776083372787236864 Como você está elegante hoje!\`
@@ -56,20 +56,26 @@ client.on('message', async (message) => {
     await message.author.send(welcomeMessage)
     return;
   }
+
   if (message.channel.id === channelId && !message.author.bot) {
     try {
       await message.delete()
     } catch { }
   }
+
   if (message.author.bot || !message.content.startsWith(mailCommand)) return;
   try {
     await message.delete()
   } catch { }
+
   let [command, userTag, ...msg] = message.content.split(' ');
+
   if (isNaN(userTag)) {
     const index = message.content.indexOf('#')
+
     if (index > 0) {
       userTag = message.content.slice(command.length + 1, index + 5)
+
       msg = message.content.slice(index + 5, message.content.length)
     } else {
       msg = msg.join(' ')
@@ -77,6 +83,7 @@ client.on('message', async (message) => {
   } else {
     msg = msg.join(' ')
   }
+
   guild.emojis.cache.map(emoji => {
     if (msg.includes(`:${emoji.name}:`)) {
       const regex = new RegExp(`<:${emoji.name}:([0-9]{18})>|:${emoji.name}:`, "g")
@@ -107,4 +114,4 @@ client.on('message', async (message) => {
 
 })
 
-client.login(token)
+client.login(BOT_TOKEN)
