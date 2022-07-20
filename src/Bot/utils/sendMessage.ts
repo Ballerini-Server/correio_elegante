@@ -3,7 +3,7 @@ import { Bot } from "..";
 import { messageEmbed } from "../../templates/messageEmbed";
 
 const bot = Bot.getInstance();
-const logChannel = process.env.LOG_CHANNEL_ID as string;
+const logChannel = process.env.CHANNEL_ID as string;
 
 export async function sendMessage(member: GuildMember, message: string) {
   const embed = messageEmbed(member, message)

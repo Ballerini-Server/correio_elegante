@@ -2,7 +2,7 @@ import { TextChannel } from "discord.js";
 import { Bot } from "..";
 const bot = Bot.getInstance();
 
-const logChannel = process.env.LOG_CHANNEL_ID as string;
+const logChannel = process.env.CHANNEL_ID as string;
 
 bot.on('ready', async () => {
   bot.user?.setPresence({
