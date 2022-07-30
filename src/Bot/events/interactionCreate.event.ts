@@ -40,7 +40,7 @@ bot.on('interactionCreate', async (interaction) => {
     .setStyle('SHORT');
   const message = new TextInputComponent()
     .setCustomId('message')
-    .setLabel("O que quer que eu dia por você?")
+    .setLabel("O que quer que eu diga por você?")
     .setStyle('PARAGRAPH');
 
   const firstActionRow = new MessageActionRow<ModalActionRowComponent>().addComponents(user);
