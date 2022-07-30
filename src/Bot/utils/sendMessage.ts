@@ -9,5 +9,5 @@ export async function sendMessage(member: GuildMember, message: string) {
   const embed = messageEmbed(member, message)
   const channel = bot.channels.cache.get(logChannel) as TextChannel
 
-  await channel.send({ embeds: [embed] })
+  await channel.send({ embeds: [embed], content: `<@${member.user.id}>` })
 }

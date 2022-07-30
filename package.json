@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/eris.js"
+  },
   "dependencies": {
     "discord.js": "^13.8.1",
     "dotenv": "^10.0.0"
