@@ -1,6 +1,6 @@
 import { GuildMember, MessageEmbed, User } from "discord.js"
 
-export function messageLogEmbed(member: GuildMember, message: string, from: User) {
+export function messageLogEmbed(member: GuildMember | User, message: string, from: User) {
   const embed = new MessageEmbed({
     description: `**Uma nova mensagem** 💗`,
     fields: [
